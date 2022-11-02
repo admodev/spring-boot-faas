@@ -7,6 +7,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -40,9 +41,16 @@ public class FaasController {
   }
 
   @Bean
-  public Function<PersonaEntity, String>mapobject() {
+  public Function<PersonaEntity, String> mapobject() {
     return input -> {
       return "Hola " + input.getNombre() + " " + input.getLista().size();
+    };
+  }
+
+  @Bean
+  public Function<Message<PersonaEntity>, String> mapmessage() {
+    return input -> {
+      return "Headers: " + input.getHeaders() + "\n Payload: " + input.getPayload() + "\n";
     };
   }
 }
