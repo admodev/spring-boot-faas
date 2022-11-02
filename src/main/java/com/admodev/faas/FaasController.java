@@ -1,5 +1,7 @@
 package com.admodev.faas;
 
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -27,6 +29,20 @@ public class FaasController {
   public Supplier<String> supply() {
     return () -> {
       return "Salida sin consumir nada.";
+    };
+  }
+
+  @Bean
+  public Function<Map<String, Object>, String> mapjson() {
+    return input -> {
+      return "Hola " + input.get("a") + " " + ((List<Object>) input.get("b")).size();
+    };
+  }
+
+  @Bean
+  public Function<PersonaEntity, String>mapobject() {
+    return input -> {
+      return "Hola " + input.getNombre() + " " + input.getLista().size();
     };
   }
 }
